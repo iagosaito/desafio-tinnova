@@ -22,7 +22,15 @@ Está aplicação está utilizando um servidor Tomcat embutido rodando na porta 
 
 ## REST APIs Endpoints
 
-### Para visualizar toda a documentação da API no Swagger
+* Cadastrar um Veículo: ``` /veiculos (POST) ```
+* Atualizar um Veículo: ``` /veiculos/{id} (PUT)```
+* Listar os Veículo: ``` /veiculos (GET)```
+* Buscar um Veículo por ID: ``` /veiculos/{id} (GET)```
+* Atualizar Parcialmente um Veículo: ``` /veiculos/{id} (PATCH)```
+* Excluir um Veículo: ``` /veiculos/{id} (DELETE)```
+* Filtra os Veículo por parâmetros: ``` /veiculos/find?q={parametros} (GET)```
+
+### Para visualizar a documentação completa da API no Swagger
 ```
 Execute o servidor e acesse o navegador em: localhost:8080/swagger-ui.html
 ```
