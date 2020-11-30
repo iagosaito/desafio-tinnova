@@ -16,7 +16,7 @@ Está aplicação está utilizando um servidor Tomcat embutido rodando na porta 
 
 * Para rodar apenas os testes unitário com JUnit 
 ```
-`mvn test ou ./mvnw teste`
+`mvn test ou ./mvnw test`
 ```
 
 
