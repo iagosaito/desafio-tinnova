@@ -1,5 +1,5 @@
 # Spring Boot RESTFul API para Cadastro de Veículos
-REST APIs implementada utilizando Spring Boot e um H2 Database.
+REST APIs implementada utilizando Spring Boot e H2 Database.
 
 ## Como executar?
 
