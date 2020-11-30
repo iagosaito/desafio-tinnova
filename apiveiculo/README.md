@@ -3,7 +3,7 @@ REST APIs implementada utilizando Spring Boot e um H2 Database.
 
 ## Como executar?
 
-* Faça o Build do projeto e roda os testes executando 
+* Faça o Build do projeto e rode os testes executando 
 ```
 `mvn clean package`
 ```
