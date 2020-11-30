@@ -6,7 +6,7 @@ Projeto desafio para produção de uma aplicação para SPA consumindo uma API d
 
 * Clone o Repositório
 * Vá até o diretório da aplicação
-``
+```
 cd client-tinnova-veiculos
 ```
 * Instale NPM Packages 
