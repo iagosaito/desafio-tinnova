@@ -1,0 +1,148 @@
+<div>
+    <form #form="ngForm" autocomplete="off" (ngSubmit)="salvar(form)">
+        <div class="p-grid">
+
+            <div class="p-col-12">
+                <h1>Desafio Tinnova - Veículos</h1>
+            </div>
+    
+            <div class="p-col-12">
+                <h2>Cadastrar Veículo</h2>
+            </div>
+            
+            <div class="p-col-2 p-md-6 p-sm-12 p-fluid">
+                <label>Nome Veículo</label>
+                <input type="text" name="veiculo" pInputText [(ngModel)]="veiculo.veiculo" required>
+            </div>
+    
+            <div class="p-col-1 p-md-6 p-sm-12 p-fluid">
+                <label>Ano</label>
+                <input type="number" min="1940" max="2022" name="ano" pInputText [(ngModel)]="veiculo.ano" required >
+            </div>
+    
+            <div class="p-col-4 p-md-6 p-sm-12 p-fluid">
+                <label>Marca</label>
+                <p-dropdown name="marca" [options]="marcas" placeholder="Selecione" [(ngModel)]="veiculo.marca" required></p-dropdown>
+            </div>
+    
+            <div class="p-col-1 p-md-6 p-sm-12 p-fluid">
+                <label>Vendido</label>
+                <p-dropdown name="vendido" [options]="vendido" placeholder="Selecione" [(ngModel)]="veiculo.vendido" required></p-dropdown>
+            </div>
+
+            <div class="p-col-12 p-fluid">
+                <label>Descrição</label>
+                <textarea pInputTextarea name="descricao" [(ngModel)]="veiculo.descricao" rows="3"></textarea>
+            </div>
+    
+            <div class="p-col-2 p-fluid">
+                <button pButton type="submit" [label]="btnLabelCadastrarOuAtualizar" [disabled]="!form.form.valid"></button>
+            </div>
+
+            <div class="p-col-2 p-fluid">
+                <button pButton type="button" (click)="limparFormulario()" label="Cancelar"></button>
+            </div>
+    
+        </div>
+
+    </form>
+
+    <div class="p-col-12">
+
+        <div class="p-col-12">
+            <h2> Listagem de Veículos </h2>
+            <p-table [value]="veiculos" [responsive]=true> 
+                <ng-template pTemplate="header">
+                    <tr>
+                        <th>Veículo</th>
+                        <th class="col-content">Marca</th>
+                        <th class="col-content">Ano</th>
+                        <th class="col-status">Vendido</th>
+                        <th class="col-acoes">Ações</th>
+                    </tr>
+                </ng-template>
+                <ng-template pTemplate="body" let-veiculo>
+                    <tr>
+                        <td>{{ veiculo.veiculo }}</td>
+                        <td>{{ veiculo.marca }}</td>
+                        <td>{{ veiculo.ano }}</td>
+                        <td>{{ veiculo.vendido ? 'Sim' : 'Não'}}</td>
+                        <td>
+                            <button class="btn-acoes" pButton icon="pi pi-pencil" pTooltip="Editar" (click)="atualizar(veiculo)" tooltipPosition="top"></button>
+                            <button class="btn-acoes" pButton icon="pi pi-trash" pTooltip="Excluir" (click)="excluir(veiculo.id)" tooltipPosition="top"></button>
+                            <button class="btn-acoes" pButton icon="pi pi-check-circle" pTooltip="Marcar como Vendido" (click)="vender(veiculo.id)" tooltipPosition="top"></button> 
+                        </td>
+                    </tr>
+                </ng-template>
+            </p-table>
+
+        </div>
+
+    </div>
+
+    <p-dialog header="Veículos por década" [maximizable]="true" [(visible)]="display" [style]="{width: '70vw'}">
+
+        <h5>Tipo de Filtro</h5>
+        <div class="p-field-radiobutton">
+            <p-radioButton name="tipoFiltro" value="decada" [(ngModel)]="tipoFiltro"></p-radioButton>
+            <label for="city1">Por Década</label>
+        </div>
+        <div class="p-field-radiobutton">
+            <p-radioButton name="tipoFiltro" value="fabricante" [(ngModel)]="tipoFiltro"></p-radioButton>
+            <label for="city2">Por Fabricante</label>
+        </div>
+        <div class="p-field-radiobutton">
+            <p-radioButton (click)="consultarVeiculosUltimaSemana()" name="tipoFiltro" value="ultimaSemana" [(ngModel)]="tipoFiltro"></p-radioButton>
+            <label for="city3">Registrados na última semana</label>
+        </div>
+
+        <div *ngIf="tipoFiltro === 'decada'">
+            <div class="p-col-4 p-md-6 p-sm-6 p-fluid" >
+                <label>Década</label>
+                <p-dropdown (onChange)="consultarVeiculosPorDecada($event)" name="marca" [options]="decadas" placeholder="Selecione uma Década"></p-dropdown>
+            </div>
+            <div class="p-col-4 p-md-6 p-sm-6 p-fluid" >
+                <label>Quantidade de Veículos: {{ quantidadePorDecada }}</label>
+            </div>
+        </div>
+
+        <div *ngIf="tipoFiltro === 'fabricante'">
+            <div class="p-col-4 p-md-6 p-sm-6 p-fluid" >
+                <label>Fabricante</label>
+                <p-dropdown (onChange)="consultarVeiculosPorFabricante($event)" name="marca" [options]="marcas" placeholder="Selecione um Fabricante"></p-dropdown>
+            </div>
+            <div class="p-col-4 p-md-6 p-sm-6 p-fluid" >
+                <label>Quantidade por Fabricante: {{ quantidadePorFabricante }}</label>
+            </div>
+        </div>
+
+        <div *ngIf="tipoFiltro === 'ultimaSemana'">
+            <p-table [value]="veiculosUltimaSemana" [responsive]=true> 
+                <ng-template pTemplate="header">
+                    <tr>
+                        <th>Veículo</th>
+                        <th class="col-content">Marca</th>
+                        <th class="col-content">Ano</th>
+                        <th class="col-status">Vendido</th>
+                    </tr>
+                </ng-template>
+                <ng-template pTemplate="body" let-veiculoUltimaSemana>
+                    <tr>
+                        <td>{{ veiculoUltimaSemana.veiculo }}</td>
+                        <td>{{ veiculoUltimaSemana.marca }}</td>
+                        <td>{{ veiculoUltimaSemana.ano }}</td>
+                        <td>{{ veiculoUltimaSemana.vendido ? 'Sim' : 'Não'}}</td>
+                    </tr>
+                </ng-template>
+            </p-table>
+        </div>
+
+    </p-dialog>
+
+    <button type="button" pButton (click)="showDialog()" icon="pi pi-info-circle" label="Consultar Veículos"></button>
+
+    <div class="p-col-12">
+        <label>Quantidade de veículos não vendidos: {{ quantidadeNaoVendidos }}</label>
+    </div>
+
+</div>
