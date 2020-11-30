@@ -19,6 +19,8 @@ Está aplicação está utilizando um servidor Tomcat embutido rodando na porta 
 `mvn test ou ./mvnw test`
 ```
 
+Você também pode acessar o console da base de dados H2 acessando ```http://localhost:8080/h2-console```
+
 
 ## REST APIs Endpoints
 
