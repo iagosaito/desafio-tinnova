@@ -3,10 +3,16 @@ REST APIs implementada utilizando Spring Boot e um H2 Database.
 
 ## Como executar?
 
-* Faça o Build do projeto e rode os testes executando 
+* Para realizar o build do projeto e rodar os testes 
 ```
-`mvn clean package`
+`.mvn clean package ou ./mvnw clean package`
 ```
+
+* Para rodar apenas os testes unitário com JUnit 
+```
+`mvn test ou ./mvnw teste`
+```
+
 
 ## REST APIs Endpoints
 
